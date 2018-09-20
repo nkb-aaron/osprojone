@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -55,7 +56,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     //fgets(str, MAXCHAR, fp) != NULL
-    while (fgets(str, MAXCHAR, fp) != NULL){
+    /*while (getline(fp, str) != NULL){
     	int i, j=0, k;
 		  for(i=0; str[i]; i++)
 		  {
@@ -70,7 +71,31 @@ int main(int argc, char *argv[]) {
 				}
 		    }
 		  }
-	}
+	}*/
+	
+	size_t buffer_size = 80;
+    char *buffer = malloc(buffer_size * sizeof(char));
+
+    // read each line and print it to the screen
+    int line_number = 0;
+    while(-1 != getline(&buffer, &buffer_size, fp))
+    {
+        //printf("%d: %s", ++line_number, buffer);
+        int i, j=0, k;
+		  for(i=0; buffer[i]; i++)
+		  {
+		    if(buffer[i] == sub[j])
+		    {
+		      for(k=i, j=0; buffer[k] && sub[j]; j++, k++)
+		        if(buffer[k]!=sub[j])
+		            break;
+		       if(!sub[j]){
+		        printf("%s", buffer);
+		        
+				}
+		    }
+		  }
+    }
         
     printf("\n");
     fclose(fp);
