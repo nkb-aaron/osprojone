@@ -9,9 +9,12 @@
 int main(int argc, char *argv[]) {
 	int a;
 	
+	if(argc == 0 || argv[1] == NULL){
+		return 0;
+	}
    /* for loop execution */
    for( a = 1; a < argc; a = a + 1 ){
-      printf("Text in File: %d\n", a);
+      //printf("Text in File: %d\n", a);
    
     FILE *fop;
     char str[MAXCHAR];
@@ -19,13 +22,12 @@ int main(int argc, char *argv[]) {
  
     fop = fopen(filename, "r");
     if (fop == NULL){
-        printf("Could not open file %s",filename);
+        printf("my-cat: cannot open file");
         printf("\n");
         return 1;
     }
     while (fgets(str, MAXCHAR, fop) != NULL)
         printf("%s", str);
-    printf("\n");
     fclose(fop);
 }
     return 0;

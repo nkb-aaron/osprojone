@@ -9,20 +9,52 @@
 int main(int argc, char *argv[]) {
 	int a;
 	char* sub = argv[1];
+	
+	if(argc == 0 || argv[1] == NULL){
+		printf("my-grep: searchterm[file ...]");
+		printf("\n");
+		return 1;
+	}
+	
+	//check stadard input
+	if(argc == 1 || argv[2] == NULL){
+		char str2[MAXCHAR];
+	    fgets(str2, MAXCHAR, stdin);
+	    int i, j=0, k;
+		  for(i=0; str2[i]; i++)
+		  {
+		    if(str2[i] == sub[j])
+		    {
+		      for(k=i, j=0; str2[k] && sub[j]; j++, k++)
+		        if(str2[k]!=sub[j])
+		            break;
+		       if(!sub[j]){
+		        printf("%s", str2);
+		        
+				}
+		    }
+		  }
+	    //printf("result = %zd, n = %zu, line = \"%s\"\n", result, n, line);
+	    //free(line);
+		return 0;
+	}
+	
    /* for loop execution */
    for( a = 2; a < argc - 1; a = a + 1 ){
-      printf("Matching Text in File: %d\n", a - 1);
+      //printf("Matching Text in File: %d\n", a - 1);
    
     FILE *fp;
     char str[MAXCHAR];
     char* filename = argv[a];
- 
+    
+    
     fp = fopen(filename, "r");
     if (fp == NULL){
-        printf("Could not open file %s",filename);
+        printf("my-grep: cannot open file");
         printf("\n");
         return 1;
     }
+    //fgets(str, MAXCHAR, fp) != NULL
     while (fgets(str, MAXCHAR, fp) != NULL){
     	int i, j=0, k;
 		  for(i=0; str[i]; i++)
